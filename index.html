@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Will You Be My Valentine? 💕</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
     <style>
         * {
             margin: 0;
@@ -288,9 +289,33 @@
         // Add mousemove event listener
         document.addEventListener('mousemove', moveButton);
 
+        // Function to capture and download screenshot
+        function captureProof() {
+            setTimeout(() => {
+                html2canvas(document.body, {
+                    backgroundColor: '#ffeef8',
+                    scale: 2
+                }).then(canvas => {
+                    // Convert canvas to blob and download
+                    canvas.toBlob(blob => {
+                        const url = URL.createObjectURL(blob);
+                        const link = document.createElement('a');
+                        const date = new Date().toISOString().split('T')[0];
+                        link.download = `she-said-yes-${date}.png`;
+                        link.href = url;
+                        link.click();
+                        URL.revokeObjectURL(url);
+                    });
+                });
+            }, 5000); // Wait 5 seconds before capturing
+        }
+
         // When "Yes" is clicked
         yesBtn.addEventListener('click', () => {
             celebration.style.display = 'flex';
+            
+            // Capture screenshot after 5 seconds
+            captureProof();
             
             // Create explosion of hearts
             for (let i = 0; i < 30; i++) {

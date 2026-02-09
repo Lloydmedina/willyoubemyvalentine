@@ -10,6 +10,7 @@ A playfully sweet Valentine's Day invitation page with a cheeky twist! This simp
   - **"Yes" Button** - A lush pink button that's always ready to be clicked
   - **"No" Button** - A plain white outlined button with a playful twist... it runs away when your cursor gets near! 
 - **Celebration Animation** - When they finally click "Yes", enjoy a beautiful celebration with exploding hearts
+- **Automatic Screenshot** - After 5 seconds of clicking "Yes", the page automatically captures and downloads a screenshot as proof that they said yes! 📸
 - **Irritatingly Sweet** - The "No" button is practically unclickable, making it hilariously inevitable that they'll say yes!
 
 ## 🎯 The Twist
@@ -23,6 +24,7 @@ The "No" button isn't just a button - it's a playful escape artist! Whenever the
 3. Send the link to your special someone
 4. Watch them try (and hilariously fail) to click "No"
 5. Celebrate when they inevitably click "Yes"! 🎉
+6. Wait 5 seconds and a screenshot will automatically download as proof! 📸
 
 ## 💝 Perfect For
 
@@ -35,7 +37,8 @@ The "No" button isn't just a button - it's a playful escape artist! Whenever the
 
 - Pure HTML5
 - CSS3 (with animations and transitions)
-- Vanilla JavaScript (no dependencies!)
+- Vanilla JavaScript
+- html2canvas library (for screenshot capture)
 
 ## 📱 Responsive
 
