@@ -4,6 +4,7 @@ A playfully sweet Valentine's Day invitation page with a cheeky twist! This simp
 
 ## ✨ Features
 
+- **Personalization Support** - Customize the invitation with the receiver's name, sender's name, and even a profile photo using URL parameters!
 - **Beautiful Pink-Themed Card** - A romantic card design with hearts and flowers in lovely pinkish colors
 - **Animated Decorations** - Floating hearts and beating heart animations for that extra romantic touch
 - **Interactive Buttons**:
@@ -19,12 +20,49 @@ The "No" button isn't just a button - it's a playful escape artist! Whenever the
 
 ## 🚀 How to Use
 
+### Basic Usage
 1. Simply open `index.html` in any web browser
-2. Share the file or host it online
-3. Send the link to your special someone
-4. Watch them try (and hilariously fail) to click "No"
-5. Celebrate when they inevitably click "Yes"! 🎉
-6. Wait 5 seconds and a screenshot will automatically download as proof! 📸
+2. If you haven't added URL parameters, a personalization modal will appear where you can enter:
+   - Receiver's name
+   - Your name (sender)
+   - Photo URL (optional)
+3. Fill in the details or click "Skip" to use the default message
+4. Share the page or send the link to your special someone
+5. Watch them try (and hilariously fail) to click "No"
+6. Celebrate when they inevitably click "Yes"! 🎉
+7. Wait 5 seconds and a screenshot will automatically download as proof! 📸
+
+### Personalization with URL Parameters (Alternative Method)
+
+You can also pre-fill the information by adding URL parameters instead of using the modal:
+
+```
+index.html?to=Sarah&from=John&photo=https://example.com/photo.jpg
+```
+
+**Available parameters:**
+- `to` - The receiver's name (appears in the title)
+- `from` - Your name (appears as a signature at the bottom)
+- `photo` - URL to the receiver's photo (displays as a circular profile picture)
+
+**Examples:**
+
+Just name:
+```
+index.html?to=Sarah&from=John
+```
+
+With photo:
+```
+index.html?to=Emma&from=Michael&photo=https://i.imgur.com/example.jpg
+```
+
+Single parameter:
+```
+index.html?to=My Love
+```
+
+**Tip:** If hosting online, use URL-encoded values for spaces and special characters!
 
 ## 💝 Perfect For
 

@@ -34,7 +34,25 @@
             position: relative;
             animation: fadeIn 0.6s ease-in;
         }
+        .profile-photo {
+            width: 120px;
+            height: 120px;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 5px solid #ff69b4;
+            margin: 0 auto 20px;
+            display: block;
+            box-shadow: 0 5px 15px rgba(255, 105, 180, 0.3);
+        }
 
+        .profile-photo.hidden {
+            display: none;
+        }
+
+        .receiver-name {
+            color: #ff1493;
+            font-weight: bold;
+        }
         @keyframes fadeIn {
             from {
                 opacity: 0;
@@ -148,9 +166,26 @@
             z-index: 1000;
         }
 
+        .celebration-bg-photo {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            opacity: 0.5;
+            z-index: 0;
+        }
+
+        .celebration-bg-photo.hidden {
+            display: none;
+        }
+
         .celebration-content {
             text-align: center;
             padding: 40px;
+            position: relative;
+            z-index: 1;
         }
 
         .celebration-content h2 {
@@ -192,24 +227,174 @@
                 opacity: 0;
             }
         }
+
+        .setup-modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(255, 105, 180, 0.95);
+            justify-content: center;
+            align-items: center;
+            z-index: 2000;
+            animation: fadeIn 0.5s ease;
+        }
+
+        .setup-modal.show {
+            display: flex;
+        }
+
+        .setup-content {
+            background: white;
+            padding: 40px;
+            border-radius: 30px;
+            box-shadow: 0 20px 60px rgba(255, 105, 180, 0.5);
+            max-width: 450px;
+            width: 90%;
+        }
+
+        .setup-content h2 {
+            color: #ff1493;
+            margin-bottom: 10px;
+            font-size: 32px;
+            text-align: center;
+        }
+
+        .setup-content p {
+            color: #ff69b4;
+            margin-bottom: 30px;
+            text-align: center;
+            font-size: 16px;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        .form-group label {
+            display: block;
+            color: #ff1493;
+            font-weight: bold;
+            margin-bottom: 8px;
+            font-size: 14px;
+        }
+
+        .form-group input {
+            width: 100%;
+            padding: 12px;
+            border: 2px solid #ffb6d9;
+            border-radius: 10px;
+            font-size: 16px;
+            outline: none;
+            transition: border-color 0.3s ease;
+        }
+
+        .form-group input:focus {
+            border-color: #ff69b4;
+        }
+
+        .form-buttons {
+            display: flex;
+            gap: 15px;
+            margin-top: 30px;
+        }
+
+        .setup-btn {
+            flex: 1;
+            padding: 15px;
+            border: none;
+            border-radius: 50px;
+            font-size: 16px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .setup-btn.primary {
+            background: linear-gradient(135deg, #ff69b4, #ff1493);
+            color: white;
+        }
+
+        .setup-btn.primary:hover {
+            transform: scale(1.05);
+            box-shadow: 0 5px 15px rgba(255, 105, 180, 0.4);
+        }
+
+        .setup-btn.secondary {
+            background: transparent;
+            color: #ff69b4;
+            border: 2px solid #ff69b4;
+        }
+
+        .setup-btn.secondary:hover {
+            background: rgba(255, 105, 180, 0.1);
+        }
+
+        .help-text {
+            font-size: 12px;
+            color: #ff69b4;
+            margin-top: 5px;
+            line-height: 1.4;
+        }
+
+        .help-text strong {
+            color: #ff1493;
+        }
     </style>
 </head>
 <body>
+    <div class="setup-modal" id="setupModal">
+        <div class="setup-content">
+            <h2>💕 Personalize Your Invitation</h2>
+            <p>Add names to make it extra special!</p>
+            
+            <form id="setupForm">
+                <div class="form-group">
+                    <label for="receiverInput">To (Receiver's Name):</label>
+                    <input type="text" id="receiverInput" placeholder="e.g., Sarah" />
+                </div>
+                
+                <div class="form-group">
+                    <label for="senderInput">From (Your Name):</label>
+                    <input type="text" id="senderInput" placeholder="e.g., John" />
+                </div>
+                
+                <div class="form-group">
+                    <label for="photoInput">Photo URL (Optional):</label>
+                    <input type="url" id="photoInput" placeholder="https://example.com/photo.jpg" />
+                    <div class="help-text">
+                        <strong>Tip:</strong> For Facebook images, right-click the photo → "Copy image address" or "Open image in new tab" to get the direct URL.
+                    </div>
+                </div>
+                
+                <div class="form-buttons">
+                    <button type="button" class="setup-btn secondary" id="skipBtn">Skip</button>
+                    <button type="submit" class="setup-btn primary">Continue ❤️</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
     <div class="hearts-background" id="heartsBackground"></div>
 
     <div class="card">
+        <img id="profilePhoto" class="profile-photo hidden" alt="Profile" />
+        
         <div class="decorations">
             <span class="heart">❤️</span>
             <span>🌸</span>
             <span class="heart">💕</span>
         </div>
         
-        <h1>Will You Be My Valentine?</h1>
+        <h1><span id="receiverName" class="receiver-name"></span><span id="willYouText">Will You Be My Valentine?</span></h1>
         
-        <p>
+        <p id="messageText">
             I've been thinking about you, and I can't imagine celebrating 
             this Valentine's Day without you. So... what do you say? 💝
         </p>
+        <p id="senderName" style="margin-top: 20px; font-style: italic; color: #ff69b4;"></p>
 
         <div class="buttons-container">
             <button id="yesBtn">Yes! 💖</button>
@@ -218,6 +403,7 @@
     </div>
 
     <div class="celebration" id="celebration">
+        <img id="celebrationPhoto" class="celebration-bg-photo hidden" alt="" />
         <div class="celebration-content">
             <h2>Yay! 🎉💕🎊</h2>
             <p>I'm so happy! Can't wait to celebrate with you! 💝</p>
@@ -228,6 +414,66 @@
     </div>
 
     <script>
+        // Parse URL parameters for personalization
+        const urlParams = new URLSearchParams(window.location.search);
+        let receiverName = urlParams.get('to') || '';
+        let senderName = urlParams.get('from') || '';
+        let photoUrl = urlParams.get('photo') || '';
+
+        // Setup modal elements
+        const setupModal = document.getElementById('setupModal');
+        const setupForm = document.getElementById('setupForm');
+        const skipBtn = document.getElementById('skipBtn');
+        const receiverInput = document.getElementById('receiverInput');
+        const senderInput = document.getElementById('senderInput');
+        const photoInput = document.getElementById('photoInput');
+
+        // Show modal if no parameters are provided
+        if (!receiverName && !senderName && !photoUrl) {
+            setupModal.classList.add('show');
+        }
+
+        // Function to update page with personalized data
+        function updatePersonalization() {
+            const receiverNameElement = document.getElementById('receiverName');
+            const senderNameElement = document.getElementById('senderName');
+            const profilePhoto = document.getElementById('profilePhoto');
+
+            if (receiverName) {
+                receiverNameElement.textContent = receiverName + ', ';
+            }
+
+            if (senderName) {
+                senderNameElement.textContent = `- ${senderName} 💕`;
+            }
+
+            if (photoUrl) {
+                profilePhoto.src = photoUrl;
+                profilePhoto.classList.remove('hidden');
+                profilePhoto.onerror = () => {
+                    profilePhoto.classList.add('hidden');
+                };
+            }
+        }
+
+        // Handle form submission
+        setupForm.addEventListener('submit', (e) => {
+            e.preventDefault();
+            receiverName = receiverInput.value.trim();
+            senderName = senderInput.value.trim();
+            photoUrl = photoInput.value.trim();
+            updatePersonalization();
+            setupModal.classList.remove('show');
+        });
+
+        // Handle skip button
+        skipBtn.addEventListener('click', () => {
+            setupModal.classList.remove('show');
+        });
+
+        // Initial update if parameters exist
+        updatePersonalization();
+
         const noBtn = document.getElementById('noBtn');
         const yesBtn = document.getElementById('yesBtn');
         const card = document.querySelector('.card');
@@ -301,7 +547,8 @@
                         const url = URL.createObjectURL(blob);
                         const link = document.createElement('a');
                         const date = new Date().toISOString().split('T')[0];
-                        link.download = `she-said-yes-${date}.png`;
+                        const name = receiverName ? receiverName.toLowerCase().replace(/\s+/g, '-') : 'valentine';
+                        link.download = `${name}-said-yes-${date}.png`;
                         link.href = url;
                         link.click();
                         URL.revokeObjectURL(url);
@@ -313,6 +560,16 @@
         // When "Yes" is clicked
         yesBtn.addEventListener('click', () => {
             celebration.style.display = 'flex';
+            
+            // Show photo in celebration background if available
+            const celebrationPhoto = document.getElementById('celebrationPhoto');
+            if (photoUrl) {
+                celebrationPhoto.src = photoUrl;
+                celebrationPhoto.classList.remove('hidden');
+                celebrationPhoto.onerror = () => {
+                    celebrationPhoto.classList.add('hidden');
+                };
+            }
             
             // Capture screenshot after 5 seconds
             captureProof();
