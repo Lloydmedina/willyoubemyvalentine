@@ -134,6 +134,37 @@
             background: linear-gradient(135deg, #ff69b4, #ff1493);
             color: white;
             box-shadow: 0 5px 15px rgba(255, 105, 180, 0.4);
+            opacity: 0;
+            transform: scale(0) rotate(-180deg);
+            transition: transform 0.3s ease;
+        }
+
+        #yesBtn.dramatic-entrance {
+            animation: dramaticEntrance 1.5s cubic-bezier(0.68, -0.55, 0.265, 1.55) forwards;
+        }
+
+        @keyframes dramaticEntrance {
+            0% {
+                opacity: 0;
+                transform: scale(0) rotate(-180deg);
+                filter: brightness(0);
+            }
+            50% {
+                transform: scale(1.3) rotate(10deg);
+                box-shadow: 0 0 40px rgba(255, 105, 180, 0.8), 0 0 80px rgba(255, 20, 147, 0.6);
+            }
+            70% {
+                transform: scale(0.9) rotate(-5deg);
+            }
+            85% {
+                transform: scale(1.05) rotate(2deg);
+            }
+            100% {
+                opacity: 1;
+                transform: scale(1) rotate(0deg);
+                filter: brightness(1);
+                box-shadow: 0 5px 15px rgba(255, 105, 180, 0.4);
+            }
         }
 
         #yesBtn:hover {
@@ -405,6 +436,21 @@
         .copy-btn.copied {
             background: linear-gradient(135deg, #4caf50, #45a049);
         }
+
+        @keyframes sparkleOut {
+            0% {
+                opacity: 1;
+                transform: translate(0, 0) scale(0);
+            }
+            50% {
+                opacity: 1;
+                transform: translate(var(--angle-x), var(--angle-y)) scale(1.5);
+            }
+            100% {
+                opacity: 0;
+                transform: translate(var(--angle-x), var(--angle-y)) scale(0.5);
+            }
+        }
     </style>
 </head>
 <body>
@@ -585,6 +631,38 @@
         if (receiverName || senderName || photoUrl) {
             updatePersonalization();
         }
+
+        // Dramatic entrance for Yes button after 10 seconds
+        setTimeout(() => {
+            yesBtn.classList.add('dramatic-entrance');
+            
+            // Optional: Add sparkle effects around the button
+            for (let i = 0; i < 15; i++) {
+                setTimeout(() => {
+                    const sparkle = document.createElement('div');
+                    sparkle.textContent = '✨';
+                    sparkle.style.position = 'fixed';
+                    sparkle.style.fontSize = '24px';
+                    sparkle.style.pointerEvents = 'none';
+                    sparkle.style.zIndex = '999';
+                    
+                    const btnRect = yesBtn.getBoundingClientRect();
+                    sparkle.style.left = (btnRect.left + btnRect.width / 2) + 'px';
+                    sparkle.style.top = (btnRect.top + btnRect.height / 2) + 'px';
+                    
+                    const angle = (Math.PI * 2 * i) / 15;
+                    const distance = 100;
+                    
+                    document.body.appendChild(sparkle);
+                    
+                    sparkle.style.animation = `sparkleOut 1s ease-out forwards`;
+                    sparkle.style.setProperty('--angle-x', Math.cos(angle) * distance + 'px');
+                    sparkle.style.setProperty('--angle-y', Math.sin(angle) * distance + 'px');
+                    
+                    setTimeout(() => sparkle.remove(), 1000);
+                }, i * 50);
+            }
+        }, 10000); // 10 seconds delay
 
         // Create floating hearts in background
         function createFloatingHearts() {
