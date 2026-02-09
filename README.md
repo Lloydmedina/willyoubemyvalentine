@@ -56,6 +56,8 @@ You can also manually create these URLs if you prefer, but the modal makes it ea
 - A fun and romantic gesture
 - Making your loved one smile (and maybe laugh a little)
 
+( SANA ALL )
+
 ## 🛠️ Tech Stack
 
 - Pure HTML5
