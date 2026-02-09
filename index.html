@@ -353,9 +353,14 @@
         });
 
         // Prevent "No" button from being clicked (extra safety)
+        // If somehow they manage to click it, auto-click "Yes" instead!
         noBtn.addEventListener('click', (e) => {
             e.preventDefault();
             moveButton(e);
+            // Irritating twist: auto-click Yes button if No is clicked
+            setTimeout(() => {
+                yesBtn.click();
+            }, 100);
         });
     </script>
 </body>
