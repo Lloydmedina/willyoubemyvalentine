@@ -71,4 +71,4 @@ Works on desktop browsers. Best experienced with a mouse cursor for the full "ch
 
 ---
 
-Made with 💕 and a bit of mischief!
+Made with F*****G 💕 and s**T!
