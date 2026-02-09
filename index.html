@@ -342,23 +342,86 @@
         .help-text strong {
             color: #ff1493;
         }
+
+        .generated-url-container {
+            display: none;
+            margin-top: 25px;
+            padding: 20px;
+            background: #fff5f9;
+            border-radius: 15px;
+            border: 2px solid #ffb6d9;
+        }
+
+        .generated-url-container.show {
+            display: block;
+        }
+
+        .generated-url-container h3 {
+            color: #ff1493;
+            font-size: 18px;
+            margin-bottom: 10px;
+        }
+
+        .generated-url-container p {
+            color: #ff69b4;
+            font-size: 14px;
+            margin-bottom: 15px;
+        }
+
+        .url-display {
+            display: flex;
+            gap: 10px;
+            align-items: center;
+        }
+
+        .url-input {
+            flex: 1;
+            padding: 12px;
+            border: 2px solid #ff69b4;
+            border-radius: 10px;
+            font-size: 14px;
+            background: white;
+            color: #333;
+            word-break: break-all;
+        }
+
+        .copy-btn {
+            padding: 12px 20px;
+            background: linear-gradient(135deg, #ff69b4, #ff1493);
+            color: white;
+            border: none;
+            border-radius: 10px;
+            font-weight: bold;
+            cursor: pointer;
+            white-space: nowrap;
+            transition: all 0.3s ease;
+        }
+
+        .copy-btn:hover {
+            transform: scale(1.05);
+            box-shadow: 0 5px 15px rgba(255, 105, 180, 0.4);
+        }
+
+        .copy-btn.copied {
+            background: linear-gradient(135deg, #4caf50, #45a049);
+        }
     </style>
 </head>
 <body>
     <div class="setup-modal" id="setupModal">
         <div class="setup-content">
-            <h2>💕 Personalize Your Invitation</h2>
-            <p>Add names to make it extra special!</p>
+            <h2>💕 Create Your Valentine Invitation</h2>
+            <p>Fill in the details to generate a personalized link!</p>
             
             <form id="setupForm">
                 <div class="form-group">
-                    <label for="receiverInput">To (Receiver's Name):</label>
-                    <input type="text" id="receiverInput" placeholder="e.g., Sarah" />
+                    <label for="receiverInput">To (Receiver's Name): *</label>
+                    <input type="text" id="receiverInput" placeholder="e.g., Sarah" required />
                 </div>
                 
                 <div class="form-group">
-                    <label for="senderInput">From (Your Name):</label>
-                    <input type="text" id="senderInput" placeholder="e.g., John" />
+                    <label for="senderInput">From (Your Name): *</label>
+                    <input type="text" id="senderInput" placeholder="e.g., John" required />
                 </div>
                 
                 <div class="form-group">
@@ -370,8 +433,16 @@
                 </div>
                 
                 <div class="form-buttons">
-                    <button type="button" class="setup-btn secondary" id="skipBtn">Skip</button>
-                    <button type="submit" class="setup-btn primary">Continue ❤️</button>
+                    <button type="submit" class="setup-btn primary">Generate Link 💌</button>
+                </div>
+
+                <div class="generated-url-container" id="generatedUrlContainer">
+                    <h3>✨ Your Personalized Link is Ready!</h3>
+                    <p>Copy this link and send it to your special someone:</p>
+                    <div class="url-display">
+                        <input type="text" id="generatedUrl" class="url-input" readonly />
+                        <button type="button" class="copy-btn" id="copyBtn">Copy</button>
+                    </div>
                 </div>
             </form>
         </div>
@@ -420,17 +491,26 @@
         let senderName = urlParams.get('from') || '';
         let photoUrl = urlParams.get('photo') || '';
 
-        // Setup modal elements
+        // elements
         const setupModal = document.getElementById('setupModal');
         const setupForm = document.getElementById('setupForm');
-        const skipBtn = document.getElementById('skipBtn');
         const receiverInput = document.getElementById('receiverInput');
         const senderInput = document.getElementById('senderInput');
         const photoInput = document.getElementById('photoInput');
+        const generatedUrlContainer = document.getElementById('generatedUrlContainer');
+        const generatedUrlInput = document.getElementById('generatedUrl');
+        const copyBtn = document.getElementById('copyBtn');
+        const card = document.querySelector('.card');
+        const noBtn = document.getElementById('noBtn');
+        const yesBtn = document.getElementById('yesBtn');
+        const celebration = document.getElementById('celebration');
+        const heartsBackground = document.getElementById('heartsBackground');
 
-        // Show modal if no parameters are provided
+        // Show modal if no parameters are provided (sender view)
+        // Hide card in sender view
         if (!receiverName && !senderName && !photoUrl) {
             setupModal.classList.add('show');
+            card.style.display = 'none';
         }
 
         // Function to update page with personalized data
@@ -456,29 +536,55 @@
             }
         }
 
-        // Handle form submission
+        // Handle form submission - Generate URL
         setupForm.addEventListener('submit', (e) => {
             e.preventDefault();
-            receiverName = receiverInput.value.trim();
-            senderName = senderInput.value.trim();
-            photoUrl = photoInput.value.trim();
+            
+            const receiver = receiverInput.value.trim();
+            const sender = senderInput.value.trim();
+            const photo = photoInput.value.trim();
+            
+            if (!receiver || !sender) {
+                alert('Please fill in both names!');
+                return;
+            }
+
+            // Build URL with parameters
+            const params = new URLSearchParams();
+            params.append('to', receiver);
+            params.append('from', sender);
+            if (photo) {
+                params.append('photo', photo);
+            }
+
+            // Get current page URL without parameters
+            const baseUrl = window.location.href.split('?')[0];
+            const finalUrl = `${baseUrl}?${params.toString()}`;
+
+            // Display generated URL
+            generatedUrlInput.value = finalUrl;
+            generatedUrlContainer.classList.add('show');
+        });
+
+        // Copy to clipboard functionality
+        copyBtn.addEventListener('click', () => {
+            generatedUrlInput.select();
+            document.execCommand('copy');
+            
+            // Visual feedback
+            copyBtn.textContent = 'Copied! ✓';
+            copyBtn.classList.add('copied');
+            
+            setTimeout(() => {
+                copyBtn.textContent = 'Copy';
+                copyBtn.classList.remove('copied');
+            }, 2000);
+        });
+
+        // Initial update if parameters exist (receiver view)
+        if (receiverName || senderName || photoUrl) {
             updatePersonalization();
-            setupModal.classList.remove('show');
-        });
-
-        // Handle skip button
-        skipBtn.addEventListener('click', () => {
-            setupModal.classList.remove('show');
-        });
-
-        // Initial update if parameters exist
-        updatePersonalization();
-
-        const noBtn = document.getElementById('noBtn');
-        const yesBtn = document.getElementById('yesBtn');
-        const card = document.querySelector('.card');
-        const celebration = document.getElementById('celebration');
-        const heartsBackground = document.getElementById('heartsBackground');
+        }
 
         // Create floating hearts in background
         function createFloatingHearts() {

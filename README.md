@@ -4,13 +4,14 @@ A playfully sweet Valentine's Day invitation page with a cheeky twist! This simp
 
 ## ✨ Features
 
-- **Personalization Support** - Customize the invitation with the receiver's name, sender's name, and even a profile photo using URL parameters!
+- **URL Link Generator** - Easy-to-use modal to create personalized invitation links
+- **Personalization Support** - Customize with receiver's name, sender's name, and profile photo
 - **Beautiful Pink-Themed Card** - A romantic card design with hearts and flowers in lovely pinkish colors
 - **Animated Decorations** - Floating hearts and beating heart animations for that extra romantic touch
 - **Interactive Buttons**:
   - **"Yes" Button** - A lush pink button that's always ready to be clicked
   - **"No" Button** - A plain white outlined button with a playful twist... it runs away when your cursor gets near! 
-- **Celebration Animation** - When they finally click "Yes", enjoy a beautiful celebration with exploding hearts
+- **Celebration Animation** - When they finally click "Yes", enjoy a beautiful celebration with exploding hearts and the receiver's photo in the background
 - **Automatic Screenshot** - After 5 seconds of clicking "Yes", the page automatically captures and downloads a screenshot as proof that they said yes! 📸
 - **Irritatingly Sweet** - The "No" button is practically unclickable, making it hilariously inevitable that they'll say yes!
 
@@ -20,49 +21,42 @@ The "No" button isn't just a button - it's a playful escape artist! Whenever the
 
 ## 🚀 How to Use
 
-### Basic Usage
-1. Simply open `index.html` in any web browser
-2. If you haven't added URL parameters, a personalization modal will appear where you can enter:
-   - Receiver's name
-   - Your name (sender)
-   - Photo URL (optional)
-3. Fill in the details or click "Skip" to use the default message
-4. Share the page or send the link to your special someone
-5. Watch them try (and hilariously fail) to click "No"
-6. Celebrate when they inevitably click "Yes"! 🎉
-7. Wait 5 seconds and a screenshot will automatically download as proof! 📸
+### Creating Your Personalized Invitation
 
-### Personalization with URL Parameters (Alternative Method)
+1. Open `index.html` in any web browser
+2. A modal will appear asking you to fill in:
+   - **Receiver's name** (required) - The person you're inviting
+   - **Your name** (required) - Who the invitation is from
+   - **Photo URL** (optional) - A photo of the receiver
+3. Click **"Generate Link 💌"**
+4. Copy the personalized URL that appears
+5. Send this link to your special someone!
 
-You can also pre-fill the information by adding URL parameters instead of using the modal:
+### What the Receiver Sees
+
+When they open your personalized link:
+1. They see a beautiful Valentine card with their name
+2. They try (and hilariously fail) to click "No" - it runs away!
+3. When they inevitably click "Yes", celebrate! 🎉
+4. After 5 seconds, a screenshot automatically downloads as proof! 📸
+5. The celebration page shows their photo in the background (if you added one)
+
+### URL Format (Generated Automatically)
+
+The generated link will look like this:
 
 ```
 index.html?to=Sarah&from=John&photo=https://example.com/photo.jpg
 ```
 
-**Available parameters:**
-- `to` - The receiver's name (appears in the title)
-- `from` - Your name (appears as a signature at the bottom)
-- `photo` - URL to the receiver's photo (displays as a circular profile picture)
+**URL parameters:**
+- `to` - The receiver's name
+- `from` - The sender's name
+- `photo` - URL to the receiver's photo (optional)
 
-**Examples:**
+You can also manually create these URLs if you prefer, but the modal makes it easy!
 
-Just name:
-```
-index.html?to=Sarah&from=John
-```
-
-With photo:
-```
-index.html?to=Emma&from=Michael&photo=https://i.imgur.com/example.jpg
-```
-
-Single parameter:
-```
-index.html?to=My Love
-```
-
-**Tip:** If hosting online, use URL-encoded values for spaces and special characters!
+**Tip for Facebook Photos:** Right-click on the image → "Copy image address" or "Open image in new tab" to get the direct URL.
 
 ## 💝 Perfect For
 
