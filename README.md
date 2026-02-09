@@ -4,16 +4,7 @@ A playfully sweet Valentine's Day invitation page with a cheeky twist! This simp
 
 ## ✨ Features
 
-- **URL Link Generator** - Easy-to-use modal to create personalized invitation links
-- **Personalization Support** - Customize with receiver's name, sender's name, and profile photo
-- **Beautiful Pink-Themed Card** - A romantic card design with hearts and flowers in lovely pinkish colors
-- **Animated Decorations** - Floating hearts and beating heart animations for that extra romantic touch
-- **Interactive Buttons**:
-  - **"Yes" Button** - A lush pink button that's always ready to be clicked
-  - **"No" Button** - A plain white outlined button with a playful twist... it runs away when your cursor gets near! 
-- **Celebration Animation** - When they finally click "Yes", enjoy a beautiful celebration with exploding hearts and the receiver's photo in the background
-- **Automatic Screenshot** - After 5 seconds of clicking "Yes", the page automatically captures and downloads a screenshot as proof that they said yes! 📸
-- **Irritatingly Sweet** - The "No" button is practically unclickable, making it hilariously inevitable that they'll say yes!
+- Typical irritating and annoyingly ..... sweet? yeah maybe , sortof . do no. T_T 
 
 ## 🎯 The Twist
 
